@@ -19,19 +19,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, dynamic> purchasedProducts = {};
   List<String> purchasedProductsIndexes = [];
   double totalPrice = 0.0;
+  String upiId = '';
   // ignore: non_constant_identifier_names
-  static String RPI_IP = '192.168.1.3';
+  static String RPI_IP = '192.168.1.2';
   String URL = 'http://$RPI_IP:8000';
   final textEditingController = TextEditingController();
 
   Future<void> fetchData(String url) async {
-    var responsePrices = await http.get(Uri.parse('$url/prices'));
-    var responseProducts = await http.get(Uri.parse('$url/products'));
-    if (responseProducts.statusCode == 200) {
-      products = jsonDecode(responseProducts.body);
-    }
-    if (responsePrices.statusCode == 200) {
-      prices = jsonDecode(responsePrices.body);
+    var response = await http.get(Uri.parse('$url/data'));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      products = data['products'];
+      prices = data['prices'];
+      upiId = data['upi_id'];
+    } else {
+      throw Exception('Failed to fetch data');
     }
   }
 
@@ -259,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextButton(
                     onPressed: () async {
                       String upiurl =
-                          'upi://pay?pa=jithinap009@oksbi&pn=Owner&tn=Groceries&am=$totalPrice&cu=INR';
+                          'upi://pay?pa=$upiId&pn=Owner&tn=Groceries&am=$totalPrice&cu=INR';
                       await launchUrl(Uri.parse(upiurl));
                     },
                     style: TextButton.styleFrom(
