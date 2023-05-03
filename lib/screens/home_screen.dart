@@ -20,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> purchasedProductsIndexes = [];
   double totalPrice = 0.0;
   // ignore: non_constant_identifier_names
-  String URL = 'http://192.168.1.12:8000';
+  static String RPI_IP = '192.168.1.3';
+  String URL = 'http://$RPI_IP:8000';
   final textEditingController = TextEditingController();
 
   Future<void> fetchData(String url) async {
@@ -52,12 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    fetchData(URL);
+    textEditingController.text = RPI_IP;
+    fetchData(URL).then((value) {
+      super.initState();
+    });
     Timer.periodic(
       const Duration(seconds: 3),
       (Timer t) => fetchDynamicData(URL),
     );
-    super.initState();
   }
 
   @override
