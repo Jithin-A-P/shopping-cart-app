@@ -101,6 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.more_vert,
                 color: Colors.black,
               ),
+              clipBehavior: Clip.hardEdge,
+              enableFeedback: false,
               itemBuilder: (context) {
                 return [
                   const PopupMenuItem<int>(
