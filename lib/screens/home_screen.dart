@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading:
                         Image.asset('assets/product-icons/placeholder.png'),
                     trailing: Text(
-                      '\u{20B9}${productPrice.toString()}',
+                      '\u{20B9}${productPrice.toStringAsFixed(2)}',
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(
-                    'Total Price: \u{20B9}${totalPrice.toString()}',
+                    'Total Price: \u{20B9}${totalPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w600,
